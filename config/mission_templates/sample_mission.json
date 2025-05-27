@@ -1,0 +1,15 @@
+{
+  "mission_name": "demo_patrol",
+  "description": "Патрулювання з 5 точками по замкненому маршруту",
+  "drone_count": 3,
+  "default_altitude": 50,
+  "cruise_speed_mps": 5.0,
+  "loop": true,
+  "waypoints": [
+    { "x": 0, "y": 0 },
+    { "x": 30, "y": 0 },
+    { "x": 30, "y": 30 },
+    { "x": 0, "y": 30 },
+    { "x": 0, "y": 0 }
+  ]
+}

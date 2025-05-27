@@ -1,0 +1,40 @@
+# Конфігурація системи "Рій"
+
+swarm:
+  max_drones: 10                    # Максимальна кількість дронів у рої
+  default_altitude: 50             # Стандартна висота польоту (в метрах)
+  leader_selection: auto           # Режим вибору лідера (auto/manual)
+  maintain_formation: true         # Підтримувати формацію під час місії
+  mission_mode: "simulation"       # simulation | real
+
+communication:
+  protocol: "udp"                  # udp | mavlink | ros2
+  port: 14550                      # UDP порт для зв’язку
+  broadcast_address: "192.168.1.255" # Для UDP Broadcast
+  heartbeat_interval_ms: 100       # Частота обміну станами
+
+failsafe:
+  timeout_ms: 1000                 # Час очікування без зв’язку (мс)
+  enable_rtl: true                 # Автоматичне повернення додому при збої
+
+simulation:
+  enabled: true                    # Використовувати SITL-режим
+  sitl_path: "/opt/ardupilot"      # Шлях до папки з ArduPilot SITL
+  model: "quad"                    # Тип дрона у симуляції
+  instances: 3                     # Кількість симульованих дронів
+
+mavlink:
+  system_id_start: 1              # Початковий ID для дронів
+  gcs_id: 255                     # ID наземної станції
+  use_mavsdk: true                # MAVSDK або pymavlink
+
+mission:
+  map_source: "elevation_api"     # Джерело 3D-карт: elevation_api | static_map
+  planner: "astar"                # astar | rrt | hybrid
+  avoidance: true                 # Реактивне уникнення перешкод
+
+logging:
+  level: "INFO"                   # DEBUG | INFO | WARNING | ERROR
+  file: "logs/swarm.log"          # Файл журналу подій
+  rotate_size_mb: 5               # Максимальний розмір одного файлу логів
+
