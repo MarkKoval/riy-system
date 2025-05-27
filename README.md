@@ -1,6 +1,6 @@
-# AS "Swarm" - Quadcopter swarm control system
+# Automatic System (AS) "Swarm" - Quadcopter swarm control system
 
-**AS “Swarm” is a decentralized platform for 3D flight mission planning and synchronized control of groups of unmanned aerial vehicles (UAVs).
+Automatic System (AS) “Swarm” is a decentralized platform for 3D flight mission planning and synchronized control of groups of unmanned aerial vehicles (UAVs).
 
 ## 🔧 Main features
 
@@ -31,7 +31,7 @@
 ### 1. Clone the project
 
 ```bash
-git clone https://github.com/your-name/riy-system.git
+git clone https://github.com/MarkKoval/riy-system.git
 cd riy-system
 ```
 
