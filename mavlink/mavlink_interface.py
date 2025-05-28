@@ -10,7 +10,7 @@ from utils.logger import get_logger
 logger = get_logger("mavlink.mavlink_interface")
 
 
-class MavlinkInterface:
+class MAVLinkInterface:
     """
     Інтерфейс для роботи з MAVLink-дроном: підключення, надсилання команд, отримання телеметрії.
     """
