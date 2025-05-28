@@ -4,7 +4,6 @@ swarm_manager.py — Головний керуючий модуль для за�
 
 import time
 from core.drone_agent import DroneAgent
-from mavlink.mavlink_interface import MAVLinkInterface
 from utils.logger import get_logger
 
 logger = get_logger("core.swarm_manager")
@@ -20,65 +19,47 @@ class SwarmManager:
         self.agents: list[DroneAgent] = []
         self.max_drones = config.get("swarm", {}).get("max_drones", 5)
         self.simulation_mode = config.get("simulation", {}).get("enabled", True)
-        self.use_emulator = config.get("simulation", {}).get("use_emulator", True)
-        self.start_port = config.get("communication", {}).get("port", 14550)
-        self.host = config.get("communication", {}).get("host", "127.0.0.1")
 
     def launch_swarm(self):
         """
         Ініціалізує та запускає всіх агентів рою.
         """
-        mode = "емуляції" if self.use_emulator else "SITL"
-        logger.info(f"Запуск {self.max_drones} дронів у режимі {mode}")
+        logger.info(f"Запуск {self.max_drones} дронів у {'симуляції' if self.simulation_mode else 'реальному режимі'}")
 
         for i in range(self.max_drones):
-            drone_id = i + 1
-            port = self.start_port + i * 2
-        
-            if self.use_emulator:
-                mav = None
-            else:
-                mav = MAVLinkInterface(udp_port=port)
-        
-            agent = DroneAgent(
-                drone_id=drone_id,
-                mavlink=mav,
-                config=self.config,
-                port=port  # <=== додано
-            )
+            agent = DroneAgent(config=self.config, drone_id=i + 1)
             agent.start()
             self.agents.append(agent)
-            time.sleep(0.1)
+            time.sleep(0.1)  # невелика затримка між стартами
 
-        logger.info("✅ Усі агенти успішно запущені.")
+        logger.info("Усі агенти успішно запущені.")
 
     def broadcast_command(self, command: str):
         """
         Надсилає команду всім агентам у роєвій мережі.
         """
-        logger.info(f"📡 Трансляція команди '{command}' всім дронам.")
+        logger.info(f"Трансляція команди '{command}' всім дронам.")
         for agent in self.agents:
-            if agent.communicator:
-                agent.communicator.send_message({
-                    "type": "command",
-                    "command": command
-                })
+            agent.communicator.send_message({
+                "type": "command",
+                "command": command
+            })
 
-    def broadcast_mission(self, waypoints):
+    def get_swarm_state(self):
+        return {a.drone_id: a.state for a in self.agents}
+
+
+    def stop_swarm(self):
         """
-        Передає місію всім дронам.
+        Зупиняє роботу всіх агентів.
         """
-        logger.info("📦 Відправка місії всім агентам.")
+        logger.info("Зупинка всіх агентів рою.")
         for agent in self.agents:
-            if agent.communicator:
-                agent.communicator.send_message({
-                    "type": "mission",
-                    "waypoints": waypoints
-                })
+            agent.stop()
 
     def run_mission_loop(self):
         """
-        Простий демонстраційний цикл місії.
+        Прототип: основний цикл місії (може замінюватись користувачем).
         """
         try:
             while True:
@@ -87,19 +68,13 @@ class SwarmManager:
                 time.sleep(5)
                 self.broadcast_command("resume")
         except KeyboardInterrupt:
-            logger.warning("🛑 Отримано Ctrl+C — завершення роботи рою.")
+            logger.warning("Отримано Ctrl+C — завершення роботи рою.")
             self.stop_swarm()
 
-    def get_swarm_state(self):
-        """
-        Повертає стан усіх дронів.
-        """
-        return {a.drone_id: a.state for a in self.agents}
-
-    def stop_swarm(self):
-        """
-        Зупиняє всіх агентів рою.
-        """
-        logger.info("⛔ Зупинка всіх агентів рою.")
+    def broadcast_mission(self, waypoints):
         for agent in self.agents:
-            agent.stop()
+            agent.communicator.send_message({
+                "type": "mission",
+                "waypoints": waypoints
+            })
+

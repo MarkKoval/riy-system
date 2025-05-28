@@ -4,37 +4,22 @@ drone_agent.py — Логіка окремого агента-дрона в ро
 
 import threading
 import time
-import random
-from core.communication import Communication
+
 from core.communication import DroneCommunicator
 from utils.logger import get_logger
 
 logger = get_logger("core.drone_agent")
 
 
-
-
-
 class DroneAgent:
     """
     Агент, який представляє одного дрона у рої.
     """
-    
 
-    def __init__(self, drone_id, communicator=None, mavlink=None, config=None, port=14550):
-        self.config = config
+    def __init__(self, config: dict, drone_id: int):
         self.drone_id = drone_id
-        self.communicator = communicator
-        self.mavlink = mavlink
-        self.port = port
-
-        self.state = {
-            "drone_id": self.drone_id,
-            "battery": random.randint(70, 100),
-            "position": {"x": random.uniform(0, 100), "y": random.uniform(0, 100), "z": random.uniform(0, 20)},
-            "role": "лідер" if self.drone_id == 1 else "послідовник",
-            "status": "active"
-        }
+        self.config = config
+        self.running = False
 
         # Ініціалізація комунікації
         comm_cfg = self.config.get("communication", {})
@@ -49,20 +34,16 @@ class DroneAgent:
             "id": self.drone_id,
             "position": [0.0, 0.0, self.config["swarm"].get("default_altitude", 50)],
             "status": "idle",
-            "last_heartbeat": time.time(),
-            "position": {"x": 0, "y": 0, "z": 0},
+            "last_heartbeat": time.time()
         }
 
         self._main_thread = threading.Thread(target=self._run_loop, daemon=True)
 
     def start(self):
         logger.info(f"[Drone {self.drone_id}] Агент стартує.")
-        
-        self.communicator = Communication(
-            drone_id=self.drone_id,
-            port=self.port  # <=== правильний порт для кожного
-        )
+        self.running = True
         self.communicator.start()
+        self._main_thread.start()
 
     def stop(self):
         logger.info(f"[Drone {self.drone_id}] Агент зупиняється.")

@@ -42,12 +42,7 @@ class LiveMonitor(ctk.CTkFrame):
         """
         self.canvas.delete("all")
         for drone_id, state in drone_states.items():
-            try:
-                x = float(state["position"]["x"])
-                y = float(state["position"]["y"])
-            except (ValueError, TypeError, KeyError):
-                x, y = 0, 0  # fallback, якщо значення некоректне
-
+            x, y, _ = state.get("position", [0, 0, 0])
             screen_x = 400 + x * 5  # маштабування
             screen_y = 300 - y * 5
             r = 10

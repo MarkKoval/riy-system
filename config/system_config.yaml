@@ -8,19 +8,20 @@ swarm:
   mission_mode: "simulation"       # simulation | real
 
 communication:
-  host: "127.0.0.1"
-  port: 14550  # стартовий порт, далі +2 на кожен дрон
+  protocol: "udp"                  # udp | mavlink | ros2
+  port: 14550                      # UDP порт для зв’язку
+  broadcast_address: "192.168.1.255" # Для UDP Broadcast
+  heartbeat_interval_ms: 100       # Частота обміну станами
 
 failsafe:
   timeout_ms: 1000                 # Час очікування без зв’язку (мс)
   enable_rtl: true                 # Автоматичне повернення додому при збої
 
 simulation:
-  enabled: true
-  use_emulator: true
-  sitl_path: "/home/mark/ardupilot/Tools/autotest/sim_vehicle.py"
-  model: "quad"
-  instances: 3                  # Кількість симульованих дронів
+  enabled: true                    # Використовувати SITL-режим
+  sitl_path: "/opt/ardupilot"      # Шлях до папки з ArduPilot SITL
+  model: "quad"                    # Тип дрона у симуляції
+  instances: 3                     # Кількість симульованих дронів
 
 mavlink:
   system_id_start: 1              # Початковий ID для дронів
