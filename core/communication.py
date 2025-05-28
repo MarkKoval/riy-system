@@ -17,7 +17,8 @@ class DroneCommunicator:
     Клас для обміну повідомленнями між дронами через UDP broadcast або multicast.
     """
 
-    def __init__(self, port: int, broadcast_ip: str, drone_id: int, heartbeat_interval_ms: int = 100):
+    def __init__(self, broadcast_ip: str, drone_id: int, heartbeat_interval_ms: int = 100, port=14550, host="127.0.0.1"):
+        self.host = host
         self.port = port
         self.broadcast_ip = broadcast_ip
         self.drone_id = drone_id
