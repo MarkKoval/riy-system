@@ -13,54 +13,54 @@ Automatic System (AS) “Swarm” is a decentralized platform for 3D flight miss
 ---
 
 ## 📦 Project structure
-```
+```bash
 riy-system/
-├── core/                          # Swarm logic
-│   ├── __ init __.py              # Initializes the core module
-│   ├── communication.py           # Handles inter-drone communication
-│   ├── failsafe.py                # Failsafe mechanisms for fault tolerance
-│   ├── drone_agent.py             # Logic for individual drone agents
-│   ├── swarm_manager.py           # Centralized control of the swarm
-│   └── state_sync.py              # Synchronizes state across the swarm
+├── core/                          # 🧠 Swarm logic
+│   ├── __init__.py                # Initializes the core module
+│   ├── communication.py           # 📡 Inter-drone communication
+│   ├── failsafe.py                # 🛡️ Failsafe mechanisms
+│   ├── drone_agent.py             # 🤖 Individual drone agent logic
+│   ├── swarm_manager.py           # 👨‍✈️ Swarm coordination logic
+│   └── state_sync.py              # 🔄 State synchronization
 │
-├── mavlink/                       # MAVLink communication
-│   ├── __ init __.py              # Initializes the MAVLink module
-│   ├── mavlink_interface.py       # Wrapper for MAVLink connection
-│   ├── command_sender.py          # Sends MAVLink commands to drones
-│   └── telemetry_parser.py        # Parses incoming telemetry data
+├── mavlink/                       # 🔗 MAVLink communication
+│   ├── __init__.py                # Initializes the MAVLink module
+│   ├── mavlink_interface.py       # 🧩 MAVLink connection wrapper
+│   ├── command_sender.py          # 📤 Send commands via MAVLink
+│   └── telemetry_parser.py        # 📥 Parse telemetry data
 │
-├── simulation/                    # Simulation tools
-│   ├── __ init __.py              # Initializes the simulation module
-│   ├── sitl_launcher.py           # Launches SITL emulation (ArduPilot)
-│   └── agent_emulator.py          # Simulates drone agent behavior
+├── simulation/                    # 🧪 Simulation tools
+│   ├── __init__.py                # Initializes the simulation module
+│   ├── sitl_launcher.py           # 🚀 Launch ArduPilot SITL
+│   └── agent_emulator.py          # 🛰️ Emulate drone behavior
 │
-├── ui/                            # User interface
-│   ├── __ init __.py              # Initializes the UI module
-│   ├── gcs_gui.py                 # Main GUI for Ground Control Station
-│   ├── map_widget.py              # Map widget for visualizing drones
-│   └── telemetry_panel.py         # Panel displaying telemetry data
+├── ui/                            # 🖥️ User Interface
+│   ├── gcs_gui.py                 # 🧭 GCS graphical interface
+│   ├── map_widget.py              # 🗺️ Map visualization widget
+│   ├── __init__.py                # Initializes the UI module
+│   └── telemetry_panel.py         # 📊 Telemetry display panel
 │
-├── utils/                         # Utility functions and helpers
-│   ├── __ init __.py              # Initializes the utils module
-│   ├── live_monitor.py            # Live status monitoring tools
-│   ├── map_renderer.py            # Renders drone positions on the map
-│   └── mission_editor.py          # Editor for mission planning
+├── utils/                         # 🛠️ Utility functions
+│   ├── __init__.py                # Initializes the utils module
+│   ├── live_monitor.py            # 👀 Live status monitor
+│   ├── map_renderer.py            # 🧭 Map rendering logic
+│   └── mission_editor.py          # ✏️ Mission planning editor
 │
-├── config/                        # Configuration files
-│   ├── system_config.yaml         # System-wide configuration settings
-│   └── mission_templates/         # Predefined mission plans
-│       └── sample_mission.json    # Example mission definition
+├── config/                        # ⚙️ Configuration files
+│   ├── system_config.yaml         # System-wide config
+│   └── mission_templates/         # 📄 Mission templates
+│       └── sample_mission.json    # Example mission file
 │
-├── tests/                         # Unit tests
-│   ├── test_mavlink_interface.py  # Tests for MAVLink connection logic
-│   ├── test_swarm_manager.py      # Tests for swarm control and logic
-│   └── test_ui.py                 # Tests for GUI components
+├── tests/                         # 🧪 Unit tests
+│   ├── test_mavlink_interface.py  # Test MAVLink layer
+│   ├── test_swarm_manager.py      # Test swarm logic
+│   └── test_ui.py                 # Test user interface
 │
-├── main.py                        # Entry point for launching the system
-├── launch.sh                      # Script for launching full simulation
-├── .env.example                   # Example environment variables file
-├── requirements.txt               # Python dependencies
-└── README.md                      # Project documentation
+├── main.py                        # 🎬 Entry point for the system
+├── launch.sh                      # 🚀 Simulation launch script
+├── .env.example                   # 📁 Example environment variables
+├── requirements.txt               # 📦 Python dependencies
+└── README.md                      # 📘 Project documentation
 ```
 
 ---
