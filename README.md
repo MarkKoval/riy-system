@@ -13,7 +13,7 @@ Automatic System (AS) “Swarm” is a decentralized platform for 3D flight miss
 ---
 
 ## 📦 Project structure
-
+```
 riy-system/
 ├── core/                          # Swarm logic
 │   ├── __ init __.py              # Initializes the core module
@@ -61,7 +61,7 @@ riy-system/
 ├── .env.example                   # Example environment variables file
 ├── requirements.txt               # Python dependencies
 └── README.md                      # Project documentation
-
+```
 
 ---
 
